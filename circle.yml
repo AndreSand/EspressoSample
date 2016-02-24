@@ -1,8 +1,16 @@
+#
+# Build configuration for Circle CI
+#
+
+general:
+    artifacts:
+        - /home/ubuntu/NoteGit/app/build/outputs/apk/
+
 machine:
   environment:
     PATH: "~/$CIRCLE_PROJECT_REPONAME/gradle-2.9/bin:$PATH"
     TERM: "dumb"
-    ADB_INSTALL_TIMEOUT: "20"
+    ADB_INSTALL_TIMEOUT: "10"
     GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m -XX:+HeapDumpOnOutOfMemoryError"'
 
 dependencies:
@@ -12,6 +20,10 @@ dependencies:
     - echo y | android update sdk --no-ui --all --filter build-tools-23.0.2
 
 test:
+  pre:
+        - (./gradlew assemble):
+            timeout: 360
+            
   override:
     # start the emulator
     - emulator -avd circleci-android22 -no-audio -no-window:
