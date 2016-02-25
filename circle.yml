@@ -2,10 +2,6 @@
 # Build configuration for Circle CI
 #
 
-general:
-    artifacts:
-        - /home/ubuntu/NoteGit/app/build/outputs/apk/
-
 machine:
   environment:
     PATH: "~/$CIRCLE_PROJECT_REPONAME/gradle-2.9/bin:$PATH"
@@ -20,10 +16,6 @@ dependencies:
     - echo y | android update sdk --no-ui --all --filter build-tools-23.0.2
 
 test:
-  pre:
-        - (./gradlew assemble):
-            timeout: 360
-
   override:
     # start the emulator
     - emulator -avd circleci-android22 -no-audio -no-window:
