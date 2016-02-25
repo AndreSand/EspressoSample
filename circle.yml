@@ -23,7 +23,7 @@ test:
   pre:
         - (./gradlew assemble):
             timeout: 360
-            
+
   override:
     # start the emulator
     - emulator -avd circleci-android22 -no-audio -no-window:
